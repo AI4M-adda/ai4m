@@ -16,10 +16,10 @@ import {
   useSidebar,
 } from "@/components/ui/sidebar";
 import {
+  AIIcon,
   CalendarIcon,
-  ChevronsUpDownIcon,
   ComponentIcon,
-  SparklesIcon,
+  UpDownIcon,
 } from "@/assests/icons";
 import { usePathname, useRouter } from "next/navigation";
 
@@ -32,7 +32,7 @@ const products = [
   },
   {
     name: "AI Assistance",
-    logo: SparklesIcon,
+    logo: AIIcon,
     plan: "ai.ai4m.com",
     path: "/ai",
   },
@@ -76,7 +76,7 @@ export function ProductSwitcher() {
                 </span>
                 <span className="truncate text-xs">{activeProduct.plan}</span>
               </div>
-              <ChevronsUpDownIcon className="ml-auto" />
+              <UpDownIcon className="ml-auto" />
             </SidebarMenuButton>
           </DropdownMenuTrigger>
           <DropdownMenuContent
