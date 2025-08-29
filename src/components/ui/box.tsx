@@ -40,9 +40,6 @@ const Box = React.forwardRef<HTMLElement, BoxProps>(
     const finalClassName = useMemo(() => {
       return getFinalClasses(className);
     }, [className]);
-
-    console.log("finalClassName", finalClassName);
-
     const Component = asChild ? Slot : "div";
 
     return (

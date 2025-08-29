@@ -1,5 +1,5 @@
 import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
-import { ComponentSidebar } from "./_components/component-sidebar";
+import { ComponentSidebar } from "./_lib/component/component-sidebar";
 
 export default function UIComponentLayout({
   children,
