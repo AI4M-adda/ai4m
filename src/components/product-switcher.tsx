@@ -1,14 +1,12 @@
 "use client";
 
 import * as React from "react";
-import { ChevronsUpDown } from "lucide-react";
 
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuLabel,
-  DropdownMenuShortcut,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import {
@@ -17,20 +15,46 @@ import {
   SidebarMenuItem,
   useSidebar,
 } from "@/components/ui/sidebar";
+import {
+  CalendarIcon,
+  ChevronsUpDownIcon,
+  ComponentIcon,
+  SparklesIcon,
+} from "@/assests/icons";
+import { usePathname, useRouter } from "next/navigation";
 
-export function TeamSwitcher({
-  teams,
-}: {
-  teams: {
-    name: string;
-    logo: React.ElementType;
-    plan: string;
-  }[];
-}) {
+const products = [
+  {
+    name: "Components",
+    logo: ComponentIcon,
+    plan: "component.ai4m.com",
+    path: "/component",
+  },
+  {
+    name: "AI Assistance",
+    logo: SparklesIcon,
+    plan: "ai.ai4m.com",
+    path: "/ai",
+  },
+  {
+    name: "Calendar",
+    logo: CalendarIcon,
+    plan: "calendar.ai4m.com",
+    path: "/calendar",
+  },
+];
+
+export function ProductSwitcher() {
   const { isMobile } = useSidebar();
-  const [activeTeam, setActiveTeam] = React.useState(teams[0]);
+  const pathName = usePathname();
+  const router = useRouter();
+  const activeProduct = React.useMemo(() => {
+    console.log("router", pathName);
 
-  if (!activeTeam) {
+    return products.find((product) => product.path === pathName);
+  }, [pathName]);
+
+  if (!activeProduct) {
     return null;
   }
 
@@ -44,13 +68,15 @@ export function TeamSwitcher({
               className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
             >
               <div className="bg-sidebar-primary text-sidebar-primary-foreground flex aspect-square size-8 items-center justify-center rounded-lg">
-                <activeTeam.logo className="size-4" />
+                <activeProduct.logo className="size-4" />
               </div>
               <div className="grid flex-1 text-left text-sm leading-tight">
-                <span className="truncate font-medium">{activeTeam.name}</span>
-                <span className="truncate text-xs">{activeTeam.plan}</span>
+                <span className="truncate font-medium">
+                  {activeProduct.name}
+                </span>
+                <span className="truncate text-xs">{activeProduct.plan}</span>
               </div>
-              <ChevronsUpDown className="ml-auto" />
+              <ChevronsUpDownIcon className="ml-auto" />
             </SidebarMenuButton>
           </DropdownMenuTrigger>
           <DropdownMenuContent
@@ -60,19 +86,18 @@ export function TeamSwitcher({
             sideOffset={4}
           >
             <DropdownMenuLabel className="text-muted-foreground text-xs">
-              Teams
+              Products
             </DropdownMenuLabel>
-            {teams.map((team, index) => (
+            {products?.map((product) => (
               <DropdownMenuItem
-                key={team.name}
-                onClick={() => setActiveTeam(team)}
+                key={product.name}
+                onClick={() => router.push(product.path)}
                 className="gap-2 p-2"
               >
                 <div className="flex size-6 items-center justify-center rounded-md border">
-                  <team.logo className="size-3.5 shrink-0" />
+                  <product.logo className="size-3.5 shrink-0" />
                 </div>
-                {team.name}
-                <DropdownMenuShortcut>⌘{index + 1}</DropdownMenuShortcut>
+                {product.name}
               </DropdownMenuItem>
             ))}
           </DropdownMenuContent>

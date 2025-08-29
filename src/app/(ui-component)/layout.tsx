@@ -1,5 +1,5 @@
-import { AppSidebar } from "@/components/app-sidebar";
 import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
+import { ComponentSidebar } from "./_components/component-sidebar";
 
 export default function UIComponentLayout({
   children,
@@ -9,7 +9,7 @@ export default function UIComponentLayout({
   return (
     <main id="ui-component">
       <SidebarProvider>
-        <AppSidebar />
+        <ComponentSidebar />
         <SidebarInset>
           <section id="ui-component-section">{children}</section>
         </SidebarInset>
