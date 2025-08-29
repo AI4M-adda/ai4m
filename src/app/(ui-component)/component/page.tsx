@@ -2,6 +2,7 @@ import { SidebarTrigger } from "@/components/ui/sidebar";
 import { Code } from "lucide-react";
 import { componentDetails } from "../_lib/component-configs";
 import ClientPage from "./client-page";
+import { Box } from "@/components/ui/box";
 
 export default function ComponentPage() {
   return (
@@ -23,6 +24,9 @@ export default function ComponentPage() {
             </div>
           </div>
         </header>
+        <Box className={{ "": "p-4 m-4 border", "hover:": "bg-amber-400" }}>
+          Box Component
+        </Box>
 
         {/* Main Content */}
         <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
