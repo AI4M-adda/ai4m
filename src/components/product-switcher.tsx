@@ -49,9 +49,9 @@ export function ProductSwitcher() {
   const pathName = usePathname();
   const router = useRouter();
   const activeProduct = React.useMemo(() => {
-    console.log("router", pathName);
-
-    return products.find((product) => product.path === pathName);
+    console.log("router", pathName.split("/"));
+    const component = pathName.split("/")?.[1] || null;
+    return products.find((product) => product.path === `/${component}`) || null;
   }, [pathName]);
 
   if (!activeProduct) {

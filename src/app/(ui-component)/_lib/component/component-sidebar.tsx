@@ -13,10 +13,12 @@ import {
   BookOpen,
   Bot,
   Frame,
+  Map,
   PieChart,
   Settings2,
   SquareTerminal,
 } from "lucide-react";
+import { ComponentNavMain } from "./component-nav-main";
 
 const data = {
   navMain: [
@@ -134,8 +136,8 @@ export function ComponentSidebar({
         <ProductSwitcher />
       </SidebarHeader>
       <SidebarContent>
-        {/* <NavMain items={data.navMain} />
-        <NavProjects projects={data.projects} /> */}
+        <ComponentNavMain />
+        {/* <NavProjects projects={data.projects} /> */}
       </SidebarContent>
       <SidebarFooter>
         <NavUser />
