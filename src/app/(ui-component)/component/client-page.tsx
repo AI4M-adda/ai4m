@@ -3,6 +3,7 @@
 import React, { useState } from "react";
 import {
   componentCategories,
+  componentConfigs,
   componentDetails,
 } from "../_lib/component-configs";
 import { ArrowRight, Code, Eye, Search } from "lucide-react";
@@ -91,45 +92,57 @@ export default function ClientPage() {
 
       {/* Components Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {filteredComponents.map((component) => (
-          <Link key={component.name} href={`/component/${component.name}`}>
-            <div className="group bg-white/60 backdrop-blur-sm rounded-2xl p-6 border border-white/20 shadow-lg hover:shadow-2xl hover:bg-white/80 transition-all duration-300 cursor-pointer">
-              {/* Preview Area */}
-              <div className="bg-gradient-to-br from-slate-50 to-slate-100 rounded-xl p-8 mb-6 min-h-[200px] flex items-center justify-center border border-slate-200">
-                <div className="text-center">
-                  <div className="w-16 h-16 bg-gradient-to-br from-blue-600 to-indigo-600 rounded-2xl flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform duration-300">
-                    <Code className="w-8 h-8 text-white" />
-                  </div>
-                  <div className="text-sm text-slate-600">Live Preview</div>
-                </div>
-              </div>
-
-              {/* Component Info */}
-              <div className="space-y-3">
-                <div className="flex items-center justify-between">
-                  <h3 className="text-xl font-semibold text-slate-900 group-hover:text-blue-600 transition-colors duration-200">
-                    {component.name}
-                  </h3>
-                  <ArrowRight className="w-5 h-5 text-slate-400 group-hover:text-blue-600 group-hover:translate-x-1 transition-all duration-200" />
-                </div>
-
-                <p className="text-slate-600 text-sm leading-relaxed">
-                  {component.description}
-                </p>
-
-                <div className="flex items-center justify-between pt-2">
-                  <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-blue-100 text-blue-700">
-                    {component.category}
-                  </span>
-                  <div className="flex items-center text-xs text-slate-500 space-x-2">
-                    <Eye className="w-3 h-3" />
-                    <span>Interactive</span>
+        {filteredComponents.map((component) => {
+          const Component = componentConfigs[component.name]?.component;
+          const props = componentConfigs[component.name]?.defaultProps || {};
+          return (
+            <Link key={component.name} href={`/component/${component.name}`}>
+              <div className="group bg-white/60 backdrop-blur-sm rounded-2xl p-6 border border-white/20 shadow-lg hover:shadow-2xl hover:bg-white/80 transition-all duration-300 cursor-pointer">
+                {/* Preview Area */}
+                <div className="bg-gradient-to-br from-slate-50 to-slate-100 rounded-xl p-8 mb-6 min-h-[200px] flex items-center justify-center border border-slate-200">
+                  <div className="text-center">
+                    {Component ? (
+                      <Component {...props} />
+                    ) : (
+                      <>
+                        <div className="w-16 h-16 bg-gradient-to-br from-blue-600 to-indigo-600 rounded-2xl flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform duration-300">
+                          <Code className="w-8 h-8 text-white" />
+                        </div>
+                        <div className="text-sm text-slate-600">
+                          Live Preview
+                        </div>
+                      </>
+                    )}
                   </div>
                 </div>
+
+                {/* Component Info */}
+                <div className="space-y-3">
+                  <div className="flex items-center justify-between">
+                    <h3 className="text-xl font-semibold text-slate-900 group-hover:text-blue-600 transition-colors duration-200">
+                      {component.name}
+                    </h3>
+                    <ArrowRight className="w-5 h-5 text-slate-400 group-hover:text-blue-600 group-hover:translate-x-1 transition-all duration-200" />
+                  </div>
+
+                  <p className="text-slate-600 text-sm leading-relaxed">
+                    {component.description}
+                  </p>
+
+                  <div className="flex items-center justify-between pt-2">
+                    <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-blue-100 text-blue-700">
+                      {component.category}
+                    </span>
+                    <div className="flex items-center text-xs text-slate-500 space-x-2">
+                      <Eye className="w-3 h-3" />
+                      <span>Interactive</span>
+                    </div>
+                  </div>
+                </div>
               </div>
-            </div>
-          </Link>
-        ))}
+            </Link>
+          );
+        })}
       </div>
     </div>
   );

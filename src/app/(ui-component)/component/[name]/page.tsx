@@ -1,4 +1,4 @@
-import { componentConfigs, ComponentId } from "../../_lib/component-configs";
+import { componentConfigs } from "../../_lib/component-configs";
 import ClientPageContent from "./_client_page_content";
 
 export async function generateStaticParams() {
@@ -8,11 +8,10 @@ export async function generateStaticParams() {
 }
 
 interface ComponentPageProps {
-  params: { name: string };
+  params: Promise<{ name: string }>;
 }
 
-export default function ComponentPage({ params }: ComponentPageProps) {
-  const componentId = params.name as ComponentId;
-
-  return <ClientPageContent componentId={componentId} />;
+export default async function ComponentPage({ params }: ComponentPageProps) {
+  const { name } = await params;
+  return <ClientPageContent componentId={name} />;
 }

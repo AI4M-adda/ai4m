@@ -1,4 +1,5 @@
 import { Accordion } from "@/components/ui/accordion";
+import { Button } from "@/components/ui/button";
 import { Layers2, MessageCircleCode, Text } from "lucide-react";
 
 export const componentEnum = {
@@ -16,7 +17,6 @@ export const componentCategoryEnum = {
 // Component configurations
 export const componentDetails = [
   // =========== input ============= //
-
   {
     name: componentEnum.button,
     title: "Button",
@@ -46,6 +46,29 @@ export const componentDetails = [
 export const componentConfigs = {
   [componentEnum.accordion]: {
     component: Accordion,
+    defaultProps: {
+      children: "Click me",
+      variant: "default" as const,
+      size: "default" as const,
+      disabled: false,
+    },
+    propControls: {
+      children: { type: "text", label: "Text" },
+      variant: {
+        type: "select",
+        label: "Variant",
+        options: ["default", "destructive", "outline", "secondary", "ghost"],
+      },
+      size: {
+        type: "select",
+        label: "Size",
+        options: ["sm", "default", "lg"],
+      },
+      disabled: { type: "boolean", label: "Disabled" },
+    },
+  },
+  [componentEnum.button]: {
+    component: Button,
     defaultProps: {
       children: "Click me",
       variant: "default" as const,
