@@ -1,56 +1,59 @@
 "use client";
 
+import { cn } from "@/lib/utils";
 import { Slot } from "@radix-ui/react-slot";
 import React from "react";
 
 interface BoxProps extends React.HTMLAttributes<HTMLElement> {
-  className: string | { [key: string]: string | any };
+  className?: string | { [key: string]: string | any }; // Make className optional
   asChild?: boolean;
 }
 
-async function getFinalClasses(
-  className: string | { [key: string]: string | any }
-) {
-  let finalClassName = "";
+function getFinalClasses(className?: string | { [key: string]: string | any }) {
+  if (!className) return "";
+
   if (typeof className === "string") {
-    finalClassName = className;
-  } else if (typeof className === "object" && className !== null) {
-    async function getClasses(
-      obj: { [key: string]: string },
-      key: string = ""
-    ) {
-      Object.entries(obj).forEach(([prefix, classes]) => {
-        const pre: string = `${key}${prefix}`;
-        if (typeof classes === "string") {
-          const classList = classes.trim().split(/\s+/);
-          classList.forEach((cls) => {
-            if (cls) {
-              finalClassName += ` ${pre}${cls}`;
-            }
-          });
-        } else if (typeof classes === "object" && classes !== null) {
-          getClasses(classes, pre);
-        }
-      });
-    }
-
-    await getClasses(className);
-
-    finalClassName = finalClassName.trim();
+    return className;
   }
-  return finalClassName;
+
+  if (typeof className === "object" && className !== null) {
+    // Flatten object into an array of class names
+    const flattenClasses = (
+      obj: { [key: string]: any },
+      prefix: string = ""
+    ): string[] => {
+      return Object.entries(obj).flatMap(([key, value]) => {
+        const newPrefix = prefix ? `${prefix}${key}` : key;
+        if (typeof value === "string") {
+          return value
+            .trim()
+            .split(/\s+/)
+            .map((cls) => `${newPrefix}${cls}`);
+        }
+        if (typeof value === "object" && value !== null) {
+          return flattenClasses(value, newPrefix);
+        }
+        return [];
+      });
+    };
+
+    return flattenClasses(className).join(" ").trim();
+  }
+
+  return "";
 }
 
 const Box = React.forwardRef<HTMLElement, BoxProps>(
-  async ({ className, asChild = false, ...props }, ref) => {
-    const finalClassName = await getFinalClasses(className);
-    const Component = asChild ? Slot : "div";
+  ({ className, asChild = false, ...props }, ref) => {
+    const finalClassName = getFinalClasses(className);
     console.log("finalClassName", finalClassName);
+    const Component = asChild ? Slot : "div";
+
     return (
       <Component
         data-slot="box"
         role="box"
-        className={finalClassName}
+        className={cn(finalClassName)}
         ref={ref}
         {...props}
       />

@@ -24,7 +24,13 @@ export default function ComponentPage() {
             </div>
           </div>
         </header>
-        <Box className={{ "": "p-4 m-4 border", "hover:": "bg-amber-400" }}>
+        <Box
+          className={{
+            "": "p-4 m-4 border",
+            "hover:": "bg-amber-400",
+            "sm:": "bg-blue-500",
+          }}
+        >
           Box Component
         </Box>
 
