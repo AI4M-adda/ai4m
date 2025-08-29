@@ -11,6 +11,7 @@ import {
 } from "@/components/ui/sidebar";
 
 import { ComponentNavMain } from "./component-nav-main";
+import { ThemeToggle } from "@/components/theme-toggler";
 
 export function ComponentSidebar({
   ...props
@@ -18,13 +19,14 @@ export function ComponentSidebar({
   return (
     <Sidebar collapsible="icon" {...props}>
       <SidebarHeader>
-        <ProductSwitcher />
+        <NavUser />
       </SidebarHeader>
       <SidebarContent>
         <ComponentNavMain />
       </SidebarContent>
       <SidebarFooter>
-        <NavUser />
+        <ThemeToggle />
+        <ProductSwitcher />
       </SidebarFooter>
       <SidebarRail />
     </Sidebar>

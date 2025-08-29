@@ -308,17 +308,13 @@ function SidebarInset({ className, ...props }: React.ComponentProps<"main">) {
   return (
     <main
       data-slot="sidebar-inset"
-      className={
-        "flex flex-1 flex-col h-screen border-8 border-transparent rounded-xl "
-      }
+      className={"flex flex-1 flex-col h-screen rounded-xl "}
     >
       <div
         data-slot="sidebar-inset-inner"
         className={cn(
           "relative flex w-full h-full flex-1 flex-col shadow-sm rounded-xl bg-background",
           "overflow-y-auto ",
-          // "[&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]",
-
           className
         )}
         {...props}
