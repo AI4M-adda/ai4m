@@ -1,12 +1,14 @@
 "use client";
+
 import React, { useState } from "react";
 import {
   componentCategories,
   componentDetails,
 } from "../_lib/component-configs";
-import { ArrowRight, Code, Eye, Link, Search } from "lucide-react";
+import { ArrowRight, Code, Eye, Search } from "lucide-react";
+import Link from "next/link";
 
-export default function Client() {
+export default function ClientPage() {
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("All");
 
@@ -18,8 +20,33 @@ export default function Client() {
       selectedCategory === "All" || component.category === selectedCategory;
     return matchesSearch && matchesCategory;
   });
+
+  if (!filteredComponents.length) {
+    return (
+      <div className="text-center py-12">
+        <div className="w-24 h-24 bg-gradient-to-br from-slate-200 to-slate-300 rounded-3xl flex items-center justify-center mx-auto mb-6">
+          <Search className="w-12 h-12 text-slate-400" />
+        </div>
+        <h3 className="text-xl font-semibold text-slate-900 mb-2">
+          No components found
+        </h3>
+        <p className="text-slate-600 mb-6">
+          Try adjusting your search or filter criteria
+        </p>
+        <button
+          onClick={() => {
+            setSearchTerm("");
+            setSelectedCategory("All");
+          }}
+          className="inline-flex items-center px-6 py-3 bg-blue-600 text-white font-medium rounded-xl hover:bg-blue-700 transition-colors duration-200"
+        >
+          Clear Filters
+        </button>
+      </div>
+    );
+  }
   return (
-    <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <div>
       {/* Search and Filter */}
       <div className="bg-white/60 backdrop-blur-sm rounded-2xl p-6 mb-8 border border-white/20 shadow-lg">
         <div className="flex flex-col md:flex-row gap-4 items-center justify-between">
@@ -104,30 +131,6 @@ export default function Client() {
           </Link>
         ))}
       </div>
-
-      {/* Empty State */}
-      {filteredComponents.length === 0 && (
-        <div className="text-center py-12">
-          <div className="w-24 h-24 bg-gradient-to-br from-slate-200 to-slate-300 rounded-3xl flex items-center justify-center mx-auto mb-6">
-            <Search className="w-12 h-12 text-slate-400" />
-          </div>
-          <h3 className="text-xl font-semibold text-slate-900 mb-2">
-            No components found
-          </h3>
-          <p className="text-slate-600 mb-6">
-            Try adjusting your search or filter criteria
-          </p>
-          <button
-            onClick={() => {
-              setSearchTerm("");
-              setSelectedCategory("All");
-            }}
-            className="inline-flex items-center px-6 py-3 bg-blue-600 text-white font-medium rounded-xl hover:bg-blue-700 transition-colors duration-200"
-          >
-            Clear Filters
-          </button>
-        </div>
-      )}
-    </main>
+    </div>
   );
 }

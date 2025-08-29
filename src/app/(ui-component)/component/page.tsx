@@ -1,7 +1,7 @@
 import { SidebarTrigger } from "@/components/ui/sidebar";
 import { Code } from "lucide-react";
 import { componentDetails } from "../_lib/component-configs";
-import Client from "./client";
+import ClientPage from "./client-page";
 
 export default function ComponentPage() {
   return (
@@ -25,7 +25,9 @@ export default function ComponentPage() {
         </header>
 
         {/* Main Content */}
-        <Client />
+        <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+          <ClientPage />
+        </main>
 
         {/* Footer */}
         <footer className="bg-white/60 backdrop-blur-sm border-t border-slate-200 mt-16">
